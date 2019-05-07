@@ -1,0 +1,59 @@
+{% extends "shop/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+    <div class="card mt-4">
+            <img class="card-img-top img-fluid" src="/media/{{ product.image }}" alt="{{ product.title }}">
+            <div class="card-body">
+              <h3 class="card-title">{{ product.title }}</h3>
+              <h4>Rs. {{ product.price }}</h4>
+              <p class="card-text">{{ product.description }}</p>
+              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              4.0 stars
+                <p></p>
+                <p>
+                    <a href="#" name="{{ product.slug }}" class="btn btn-success add_to_cart">Add to Cart</a>
+                </p>
+            </div>
+          </div>
+          <!-- /.card -->
+
+          <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+              Product Reviews
+            </div>
+            <div class="card-body">
+                {% for rev in product.review_set.all %}
+              <p>{{ rev.rate }} stars => {{ rev.review }}</p>
+              <small class="text-muted">Posted by {{ rev.user }} on {{ rev.created }}</small>
+              <hr>
+                {% endfor %}
+              <hr>
+                <form method="POST" action="{% url "shop:review" product.slug %}">
+                    {% csrf_token %}
+                    {% bootstrap_form reviewform %}
+                    <input type="submit" value="Submit your Review" class="btn btn-primary">
+
+                </form>
+
+            </div>
+          </div>
+
+{% endblock %}
+
+{% block jscode %}
+    <script>
+        $(document).ready(function () {
+            $('.add_to_cart').on('click', function () {
+                data = {"slug": this.name, "csrfmiddlewaretoken":"{{ csrf_token }}" }
+                $.post("{% url 'shop:add_to_cart' %}", data)
+                    .done(function (response) {
+                        if (response.status == "ok") {
+                            $('#cart_count').text(response.count + " items");
+                        }
+                        alert(response.message);
+                    })
+            })
+        })
+    </script>
+{% endblock %}

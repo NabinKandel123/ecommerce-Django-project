@@ -1,0 +1,13 @@
+{% extends 'shop/base.html' %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <form method="post">
+                {% csrf_token %}
+                <p>Username</p><p><input name="username" placeholder="Username"></p>
+                <p>Password</p><p></pp><input name="password" type="password" placeholder="Password"></p>
+                <p><input class="btn btn-outline-info" type="submit" value="Log In"></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

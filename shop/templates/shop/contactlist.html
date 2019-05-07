@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block heading %}
+    Contact list
+{% endblock %}
+{% block title %}
+    contact list
+{% endblock %}
+{% block content %}
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>S.n.</th>
+            <th>Full name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Message</th>
+        </tr>
+        </thead>
+        {% for contact in data %}
+            <tr>
+                <td> {{ forloop.counter }}</td>
+                <td> {{ contact.full_name }}</td>
+                <td> {{ contact.email }} </td>
+                <td> {{ contact.address }} </td>
+                <td> {{ contact.phone_number }} </td>
+                <td> {{ contact.message }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

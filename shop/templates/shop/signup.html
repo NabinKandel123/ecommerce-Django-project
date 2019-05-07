@@ -1,0 +1,14 @@
+{% extends "shop/base.html" %}
+{% load bootstrap3 %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <form method="POST">
+                {% csrf_token %}
+{#                {{ form }}#}
+                {% bootstrap_form form %}
+                <input class="btn btn-outline-info" type="submit" value="Signup">
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+    login
+{% endblock %}
+{% block content %}
+    {% load bootstrap3 %}
+    <form method="post" style="margin: 100px">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Submit
+            </button>
+        {% endbuttons %}
+    </form>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}
+    contact me
+{% endblock %}
+{% block content %}
+
+    <div class="card" style="margin-top: 60px">
+        <div class="card-header">
+            Contact Form
+        </div>
+        <div class="card-body">
+            {#  form #}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="input-name">Full Name</label>
+                    <input type="text" class="form-control" id="input-name" name="fname"
+                           placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="input-address">Address</label>
+                    <input type="text" class="form-control" id="input-address" name="address"
+                           placeholder="Kathmandu">
+                </div>
+                <div class="form-group">
+                    <label for="input-phone">Phone Number</label>
+                    <input type="number" class="form-control" id="input-phone" name="phone"
+                           placeholder="98xxxxxxxx">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-email">Email address</label>
+                    <input type="email" class="form-control" id="input-email" name="email"
+                           placeholder="name@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Message</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

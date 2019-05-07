@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="eCommerce project sample in django">
+    <meta name="author" content="Nabin Kandel">
+
+    <title>{% block title %}{{ title }}{% endblock %} - Online Price Comparing</title>
+    <script src="/static/shop/js/jquery.min.js"></script>
+    <link href="/static/shop/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="padding-top:56px">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="/">Online Price Comparing</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:products' %}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:api_products' %}">API</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if user.is_authenticated %}
+                            <a class="dropdown-item" href="{% url 'shop:my_cart' %}">My Cart</a>
+                            <a class="dropdown-item" href="{% url 'shop:checkout' %}">Checkout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'shop:logout' %}">Log Out</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'shop:login' %}">Login</a>
+                            <a class="dropdown-item" href="{% url 'shop:signup' %}">Signup</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'shop:checkout' %}">Checkout</a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'shop:search' %}">
+                <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+            <a href="{% url 'shop:my_cart' %}" class="btn btn-outline-success my-2 my-sm-0">
+                <span class="glyphicon">🛒</span>
+                <span id="cart_count">
+                {% block cart_count %}
+                    {% if carts|length == 0 %} No items
+                    {% elif carts|length == 1 %} 1 item
+                    {% else %} {{ carts|length }} items
+                    {% endif %}
+                {% endblock %}
+                </span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+    {% block main_content %}
+        <div class="row">
+            <div class="col-lg-3">
+                <h1 class="my-4">Online Price Comparing</h1>
+                <div class="list-group">
+                    {% block categories %}
+                        {% for cat in categories %}
+                            <a href="{% url 'shop:category' cat.slug %}" class="list-group-item">{{ cat.title }}</a>
+                        {% endfor %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="col-lg-9">
+                {% block carousel %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-light">
+        <div class="container">
+            <p class="m-0 text-center">Copyright &copy; eCommerce Shop 2018</p>
+        </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <script src="/static/shop/js/bootstrap.min.js"></script>
+    <script src="/static/shop/js/bootstrap.bundle.min.js"></script>
+    {% block jscode %}{% endblock %}
+</body>
+
+</html>
